@@ -4,6 +4,6 @@ For this project, I used selenium to login to Siteimprove (requests or mecahnize
 
 Make sure to run this off corporate network (or use a proxy)
 
-#Run Autorun.bat
+# Run Autorun.bat
 
 Make sure to edit Proxy, Username, Password, and webhook fields.
