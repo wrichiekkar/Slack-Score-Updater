@@ -5,14 +5,13 @@ import requests
 
 
 proxyDict = {  # Proxy for requests (Does not work on corporate network so using proxy)
-              'http': 'ENTER PROXY HERE',
-              'https': 'ENTER PROXY HERE'
+              'http': 'ENTER PROXY',
+              'https': 'ENTER PROXY'
             }
 
 def get_score(endpoint):
     options = webdriver.ChromeOptions()
     options.add_argument('headless')
-    options.add_argument('window-size=1200x600')
 
     s = webdriver.Chrome(executable_path="chromedriver.exe", options=options)  # Set up Selenium session
 
@@ -50,7 +49,7 @@ def get_score(endpoint):
     return TotScore, BellEN, BellFR, SupEN, SupFR
 
 def webhook(TotScore, BellEN, BellFR, SupEN, SupFR, CurDate):
-    webhook_url = 'ENTER WEBHOOK'  # change URL for your webhook
+    webhook_url = 'ENTER WEBHOOK URL'  # change URL for your webhook
 
     payload = {
         'title': 'score',
