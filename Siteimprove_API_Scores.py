@@ -12,8 +12,8 @@ api_key= 'ENTER API KEY'  # api key for password
 webhook_url = 'ENTER WEBHOOK URL'  # Webhook URL
 
 def get_score():
-    data = requests.get('https://api.siteimprove.com/v2/sites/5748934667/dci/overview', verify=False, auth=(user, api_key), proxies=proxyDict).json()
-    TotScore = data.get("accessibility").get("total")
+    #data = requests.get('https://api.siteimprove.com/v2/sites/5748934667/dci/overview', verify=False, auth=(user, api_key), proxies=proxyDict).json()
+    #TotScore = data.get("accessibility").get("total")
 
     data = requests.get('https://api.siteimprove.com/v2/sites/5748934667/dci/overview?group_id=15588880510', verify=False, auth=(user, api_key), proxies=proxyDict).json()
     BellEN = data.get("accessibility").get("total")
@@ -27,14 +27,15 @@ def get_score():
     data = requests.get('https://api.siteimprove.com/v2/sites/8072738471/dci/overview', verify=False, auth=(user, api_key), proxies=proxyDict).json()
     SupFR = data.get("accessibility").get("total")
 
-    return TotScore, BellEN, BellFR, SupEN, SupFR
+    AvgScore = round (((BellEN + BellFR + SupEN + SupFR)/4),2)
+    return AvgScore, BellEN, BellFR, SupEN, SupFR
 
-def webhook(TotScore, BellEN, BellFR, SupEN, SupFR, CurDate):
+def webhook(AvgScore, BellEN, BellFR, SupEN, SupFR, CurDate):
 
     payload = {
         'title': 'score',
         'text': ("The accessibility scores for " + CurDate + " are: "
-                "\n\nTotal Score: " + str(TotScore) +
+                "\n\nAverage Score: " + str(AvgScore) +
                 "\nShop EN: " + str(BellEN) +
                 "\nShop FR: " + str(BellFR) +
                 "\nSupport EN: " + str(SupEN) +
@@ -64,6 +65,6 @@ if __name__ == "__main__":
 
     requests.packages.urllib3.disable_warnings()
     
-    TotScore, BellEN, BellFR, SupEN, SupFR = get_score()
+    AvgScore, BellEN, BellFR, SupEN, SupFR = get_score()
     CurDate = get_date()
-    webhook(TotScore, BellEN, BellFR, SupEN, SupFR, CurDate)
+    webhook(AvgScore, BellEN, BellFR, SupEN, SupFR, CurDate)
